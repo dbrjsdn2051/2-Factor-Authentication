@@ -25,6 +25,8 @@ public class User {
     private String password;
     @Column(unique = true, nullable = false)
     private String nickname;
+    @Column(unique = true, nullable = false)
+    private String email;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
@@ -35,11 +37,16 @@ public class User {
     private List<Role> authorities = new ArrayList<>();
 
     @Builder
-    public User(Long id, String username, String password, String nickname, List<Role> authorities) {
+    public User(Long id, String username, String password, String nickname, String email, List<Role> authorities) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.nickname = nickname;
         this.authorities = authorities;
+        this.email = email;
+    }
+
+    public void addAuthorizationRole() {
+        this.authorities.add(Role.VERIFY_USER);
     }
 }
