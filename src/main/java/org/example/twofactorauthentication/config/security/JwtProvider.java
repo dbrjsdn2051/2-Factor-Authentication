@@ -52,7 +52,19 @@ public class JwtProvider {
 
     public void validateToken(String token) {
         try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            Jws<Claims> claimsJws = Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
+            List<?> roles = claimsJws.getBody().get("Role", List.class);
+            List<Role> authorities = roles.stream()
+                    .map(role -> {
+                        Map<String, String> roleMap = (Map<String, String>) role;
+                        String authority = roleMap.get("authority");
+                        return Role.valueOf(authority.replace("ROLE_", ""));
+                    }).toList();
+
+            if (!authorities.contains(Role.VERIFY_USER)) {
+                throw new SecurityFilterChainException(ErrorCode.UNVERIFIED_EMAIL);
+            }
+
         } catch (SecurityException | MalformedJwtException e) {
             log.warn("유효하지 않는 JWT 서명입니다.");
             throw new SecurityFilterChainException(ErrorCode.INVALID_JWT_SIGNATURE, e);
