@@ -21,10 +21,29 @@ spring:
       hibernate:
         show_sql: true
         format_sql: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+    default-encoding: UTF-8
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    encoding: UTF-8
+    cache: false
+
 
 jwt:
   secret:
-    key: YyZ1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t1u2v3w4x5y6z7A8B9C0D1
+    key: ${JWT_KEY}
 
 logging:
   level:
@@ -34,3 +53,6 @@ logging:
     org.springframework.security.web.FilterChainProxy: TRACE
     org.springframework.security.web.access: TRACE
     org.springframework.security.web.context: TRACE
+
+encryption:
+  key: ${ENCRYPTION_KEY}

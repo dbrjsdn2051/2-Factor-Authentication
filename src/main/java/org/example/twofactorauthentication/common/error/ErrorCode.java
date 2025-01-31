@@ -21,11 +21,18 @@ public enum ErrorCode {
     SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR.value(), "서버 에러가 발생하였습니다."),
     REFRESH_TOKEN_NOT_FOUND(HttpStatus.UNAUTHORIZED.value(), "Refresh 토큰을 찾을 수 없습니다."),
     EXPIRED_REFRESH_TOKEN(HttpStatus.FORBIDDEN.value(), "Refresh 토큰이 만료되었습니다."),
+    UNVERIFIED_EMAIL(HttpStatus.FORBIDDEN.value(), "이메일 인증이 필요합니다."),
 
     // User Domain Exception
     EXISTS_ALREADY_USER(HttpStatus.BAD_REQUEST.value(), "해당 닉네임을 가진 유저가 이미 존재합니다."),
-    ;
+    EXISTS_ALREADY_EMAIL(HttpStatus.BAD_REQUEST.value(), "해당 이메일이 존재합니다."),
+    INVALID_EMAIL_CODE(HttpStatus.UNAUTHORIZED.value(), "이메일 인증코드가 일치하지 않습니다."),
 
+    // Encrypto Exception
+    ENCRYPTION_FAILED(HttpStatus.INTERNAL_SERVER_ERROR.value(), "암호화를 실패하였습닌다."),
+    DECRYPTION_FAILED(HttpStatus.INTERNAL_SERVER_ERROR.value(), "복호화를 실패하였습니다."),
+
+    ;
     private final int status;
     private final String message;
 

@@ -26,11 +26,15 @@ public class UserCreateRepDto {
     @Schema(description = "닉네임", example = "Spring")
     private String nickname;
 
+    @Schema(description = "이메일", example = "test@example.com")
+    private String email;
+
     public static User from(UserCreateRepDto dto, String encodedPassword) {
         return User.builder()
                 .nickname(dto.getNickname())
                 .username(dto.getUsername())
                 .password(encodedPassword)
+                .email(dto.getEmail())
                 .authorities(List.of(Role.USER))
                 .build();
     }
